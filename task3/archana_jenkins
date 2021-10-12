@@ -1,16 +1,34 @@
 pipeline {
     agent any 
+    environment {
+        AWS_ACCOUNT_ID="801212481227"
+        AWS_DEFAULT_REGION="us-east-1" 
+        IMAGE_REPO_NAME="deeprepo"
+        IMAGE_TAG="latest"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    }
+   
     stages {
-        stage('Demo') {
+       // Test Stage
+       stage('Demo') {
             steps {
                 echo 'GitHub Jenkins integration is successful !!!' 
             }
         }
+   // To clone GIT Repo
    stage('clone GIT Repo') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/archanamkr/ProjectUpgrad.git/']]])     
             }
         }
-   }
+  // To Build Docker Image
+    stage('Docker Image build') {
+      steps{
+        script {
+          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+        }
+      }
+    }
+  }
     
 }

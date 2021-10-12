@@ -14,7 +14,7 @@ pipeline {
    // To clone GIT Repo
    stage('clone GIT Repo') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/archanamkr/ProjectUpgrad.git/']]])     
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/archanamkr/NodeApp.git/']]])     
             }
         }
   // To Build Docker Image

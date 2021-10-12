@@ -12,7 +12,7 @@ pipeline {
        // Test Stage
        stage('Demo') {
             steps {
-                echo 'GitHub Jenkins integration is successful !!! Webhook testing' 
+                echo 'GitHub Jenkins integration is successful !!!' 
             }
         }
    // To clone GIT Repo
@@ -24,9 +24,7 @@ pipeline {
   // To Build Docker Image
     stage('Docker Image build') {
       steps{
-        script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-        }
+        echo 'Docker Image build starts'
       }
     }
   }

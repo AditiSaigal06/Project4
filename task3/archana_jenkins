@@ -6,10 +6,11 @@ pipeline {
                 echo 'GitHub Jenkins integration is successful !!!' 
             }
         }
-    }
-    stage('clone GIT Repo') {
+   stage('clone GIT Repo') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/archanamkr/ProjectUpgrad.git/']]])     
             }
         }
+   }
+    
 }

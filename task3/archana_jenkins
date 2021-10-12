@@ -1,10 +1,15 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Demo') {
             steps {
-                echo 'Hello world!' 
+                echo 'GitHub Jenkins integration is successful !!!' 
             }
         }
     }
+    stage('clone GIT Repo') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/archanamkr/ProjectUpgrad.git/']]])     
+            }
+        }
 }

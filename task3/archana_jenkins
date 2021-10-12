@@ -2,6 +2,11 @@ pipeline {
     agent any 
     environment {
         imagename = "nodeapp"
+	AWS_ACCOUNT_ID="695954107174"
+        AWS_DEFAULT_REGION="us-east-1" 
+        IMAGE_REPO_NAME="archana-project-repository "
+        IMAGE_TAG="LATEST"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
    
     stages {
@@ -22,19 +27,40 @@ pipeline {
       steps{
         echo 'Docker Image build starts'
         script {
-//dockerImage = docker.build imagename
-docker.withRegistry('https://695954107174.dkr.ecr.us-east-1.amazonaws.com','ecr:archana-project-repository:Archana_AWS_Cred'){
-	//def myImage = docker.build('archana-project-repository')
-	//myImage.push('latest')
-    dockerImage = docker.build imagename
-    dockerImage.push('latest')
-}
-}
-        
-    
+	dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
 
-      }
+}        
+  
+     }
     }
+    
+    
+    
+    stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                }
+                 
+            }
+        }
+        
+	
+	
+	// Uploading Docker images into AWS ECR
+    stage('Pushing Docker image to ECR') {
+     steps{  
+         script {
+              //  sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+	      sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         }
+        }
+	
+	}
+	
+	
+	
   }
     
 }

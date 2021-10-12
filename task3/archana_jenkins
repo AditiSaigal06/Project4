@@ -21,11 +21,10 @@ pipeline {
     stage('Docker Image build') {
       steps{
         echo 'Docker Image build starts'
-        steps{
-script {
+        script {
 dockerImage = docker.build imagename
 }
-}
+        
 
       }
     }

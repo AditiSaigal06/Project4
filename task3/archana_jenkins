@@ -1,11 +1,7 @@
 pipeline {
     agent any 
     environment {
-        AWS_ACCOUNT_ID="801212481227"
-        AWS_DEFAULT_REGION="us-east-1" 
-        IMAGE_REPO_NAME="deeprepo"
-        IMAGE_TAG="latest"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        imagename = "nodeapp"
     }
    
     stages {
@@ -25,6 +21,12 @@ pipeline {
     stage('Docker Image build') {
       steps{
         echo 'Docker Image build starts'
+        steps{
+script {
+dockerImage = docker.build imagename
+}
+}
+
       }
     }
   }

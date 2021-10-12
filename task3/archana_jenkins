@@ -22,9 +22,16 @@ pipeline {
       steps{
         echo 'Docker Image build starts'
         script {
-dockerImage = docker.build imagename
+//dockerImage = docker.build imagename
+docker.withRegistry('https://695954107174.dkr.ecr.us-east-1.amazonaws.com','ecr:archana-project-repository:Archana_AWS_Cred'){
+	//def myImage = docker.build('archana-project-repository')
+	//myImage.push('latest')
+    dockerImage = docker.build imagename
+    dockerImage.push('latest')
+}
 }
         
+    
 
       }
     }

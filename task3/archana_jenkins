@@ -7,6 +7,8 @@ pipeline {
         IMAGE_REPO_NAME="archana-project-repository"
         IMAGE_TAG="LATEST"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+	dockerRun = "docker run -p 8081:8081 -d --name node-app $imagename:$IMAGE_TAG"
+    dockerKill= "docker rm -f node-app"
     }
    
     stages {
@@ -59,6 +61,17 @@ pipeline {
 	
 	}
 	
+	//To deploy container in the new app host
+	stage('deploy to app host'){
+	
+	  steps{
+          sshagent(['Archana_AWS_New.pem']) {
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@54.164.53.129 ${dockerKill}"
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@54.164.53.129 ${dockerRun}"
+         }
+     }
+	
+	}
 	
 	
   }

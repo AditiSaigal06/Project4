@@ -16,6 +16,7 @@
 ## 192.168.100.10
 # Ex 2: A collection of hosts belonging to the 'webservers' group:
 54.175.197.202  ansible_ssh_private_key_file='/home/ubuntu/Archana_AWS.pem' ansible_ssh_user=ubuntu
+58.112.174.164 ansible_ssh_private_key_file='/home/ubuntu/Arcahna_AWS.pem' ansible_ssh_user=ubuntu
 ## [webservers]
 ## alpha.example.org
 ## beta.example.org

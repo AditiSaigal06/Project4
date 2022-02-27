@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "upgrad-archana"
+    bucket = "upgrad-pgc"
     key    = "Project4"
     region = "us-east-1"
   }

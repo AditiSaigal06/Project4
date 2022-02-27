@@ -5,7 +5,7 @@ module myip {
 
 module "Bastion_service_sg" {
  source = "terraform-aws-modules/security-group/aws"
-name        = "archana_bastion_sg"
+name        = "pgc_bastion_sg"
   description = "Security group for user-service with custom ports open within VPC, and PostgreSQL publicly open"
   vpc_id      = module.vpc.vpc_id
 
@@ -30,7 +30,7 @@ name        = "archana_bastion_sg"
 
 module "Private_Instance_sg" {
 source = "terraform-aws-modules/security-group/aws"
-name = "archana_private_sg"
+name = "pgc_private_sg"
 vpc_id      = module.vpc.vpc_id
 
   ingress_with_cidr_blocks = [
@@ -56,7 +56,7 @@ vpc_id      = module.vpc.vpc_id
 
 module "Public_Instance_sg" {
 source = "terraform-aws-modules/security-group/aws"
-name = "archana_public_sg"
+name = "pgc_public_sg"
 vpc_id=module.vpc.vpc_id
 ingress_with_cidr_blocks = [
     {
